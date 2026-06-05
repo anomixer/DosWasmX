@@ -54,7 +54,7 @@ private:
 	MixerChannel *chan;
 	MT32Emu::Service *service;
 	SDL_Thread *thread;
-	// SDL_mutex *lock;
+	SDL_mutex *lock;
 	SDL_cond *framesInBufferChanged;
 	int16_t *audioBuffer;
 	Bitu audioBufferSize;
@@ -225,11 +225,11 @@ public:
         return midiHandler_mt32;
     }
 
-	const char *GetName(void) {
+	const char *GetName(void) override {
 		return "mt32";
 	}
 
-    bool Open(const char *conf) {
+    bool Open(const char *conf) override {
         (void)conf;//UNUSED
         service = new MT32Emu::Service();
         uint32_t version = service->getLibraryVersionInt();
@@ -257,9 +257,9 @@ public:
         }
 
 		if (!load_rom_set(romDir, model)) {
-			Cross::GetPlatformResDir(romDir);
+			romDir = Cross::GetPlatformResDir();
 			if (!load_rom_set(romDir, model)) {
-					Cross::GetPlatformConfigDir(romDir);
+					romDir = Cross::GetPlatformConfigDir();
 					if (!load_rom_set(romDir, model)) {
 							delete service;
 							service = NULL;
@@ -267,7 +267,8 @@ public:
 							LOG_MSG("MT32 emulation requires the PCM and CONTROL ROM files.");
 							LOG_MSG("To eliminate this error message, check the DOSBox-X wiki.");
 							LOG_MSG("The ROM files are: CM32L_CONTROL.ROM and CM32L_PCM.ROM or MT32_CONTROL.ROM and MT32_PCM.ROM");
-							return false;
+                            sffile = "Not available";
+                            return false;
 					}
 			}
 		}
@@ -346,7 +347,7 @@ public:
         return true;
 	}
 
-	void Close(void) {
+	void Close(void) override {
         if (!open) return;
         chan->Enable(false);
         if (renderInThread) {
@@ -371,7 +372,7 @@ public:
         open = false;
 	}
 
-	void PlayMsg(uint8_t *msg) {
+	void PlayMsg(uint8_t *msg) override {
         if (renderInThread) {
             service->playMsgAt(SDL_SwapLE32(*(uint32_t *)msg), getMidiEventTimestamp());
         } else {
@@ -379,7 +380,7 @@ public:
         }
 	}
 
-	void PlaySysex(uint8_t *sysex, Bitu len) {
+	void PlaySysex(uint8_t *sysex, Bitu len) override {
         if (renderInThread) {
             service->playSysexAt(sysex, (MT32Emu::uint32_t)len, getMidiEventTimestamp());
         } else {
@@ -387,7 +388,7 @@ public:
         }
 	}
 
-	void ListAll(Program* base) {
+	void ListAll(Program* base) override {
 		base->WriteOut("  %s\n",mt32info.c_str());
 	}
 };
