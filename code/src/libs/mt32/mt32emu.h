@@ -18,21 +18,70 @@
 #ifndef MT32EMU_MT32EMU_H
 #define MT32EMU_MT32EMU_H
 
+#include "config.h"
+
+/* API Configuration */
+
+/* 0: Use full-featured C++ API. Well suitable when the library is to be linked statically.
+ *    When the library is shared, ABI compatibility may be an issue. Therefore, it should
+ *    only be used within a project comprising of several modules to share the library code.
+ * 1: Use C-compatible API. Make the library looks as a regular C library with well-defined ABI.
+ *    This is also crucial when the library is to be linked with modules in a different
+ *    language, either statically or dynamically.
+ * 2: Use plugin-like API via C-interface wrapped in a C++ class. This is mainly intended
+ *    for a shared library being dynamically loaded in run-time. To get access to all the library
+ *    services, a client application only needs to bind with a single factory function.
+ * 3: Use optimised C++ API compatible with the plugin API (type 2). The facade class also wraps
+ *    the C functions but they are invoked directly. This enables the compiler to generate better
+ *    code for the library when linked statically yet being consistent with the plugin-like API.
+ */
+
+#ifdef MT32EMU_API_TYPE
+#  if MT32EMU_API_TYPE == 0 && (MT32EMU_EXPORTS_TYPE == 1 || MT32EMU_EXPORTS_TYPE == 2)
+#    error Incompatible setting MT32EMU_API_TYPE=0
+#  elif MT32EMU_API_TYPE == 1 && (MT32EMU_EXPORTS_TYPE == 0 || MT32EMU_EXPORTS_TYPE == 2)
+#    error Incompatible setting MT32EMU_API_TYPE=1
+#  elif MT32EMU_API_TYPE == 2 && (MT32EMU_EXPORTS_TYPE == 0)
+#    error Incompatible setting MT32EMU_API_TYPE=2
+#  elif MT32EMU_API_TYPE == 3 && (MT32EMU_EXPORTS_TYPE == 0 || MT32EMU_EXPORTS_TYPE == 2)
+#    error Incompatible setting MT32EMU_API_TYPE=3
+#  endif
+#else /* #ifdef MT32EMU_API_TYPE */
+#  if 0 < MT32EMU_EXPORTS_TYPE && MT32EMU_EXPORTS_TYPE < 3
+#    define MT32EMU_API_TYPE MT32EMU_EXPORTS_TYPE
+#  else
+#    define MT32EMU_API_TYPE 0
+#  endif
+#endif /* #ifdef MT32EMU_API_TYPE */
+
 #include "globals.h"
 
-#if MT32EMU_API_TYPE == 3
-#  include "c_interface/c_interface.h"
-#elif MT32EMU_API_TYPE == 2
-#  include "c_interface/cpp_interface.h"
-#elif MT32EMU_API_TYPE == 1
-// C++ interface, use only the C++ API headers
-#  include "Types.h"
-#  include "Enumerations.h"
-#  include "Synth.h"
-#  include "MidiStreamParser.h"
-#  include "Display.h"
-#else
-#  error Unrecognised MT32EMU_API_TYPE
+#if !defined(__cplusplus) || MT32EMU_API_TYPE == 1
+
+#include "c_interface/c_interface.h"
+
+#elif MT32EMU_API_TYPE == 2 || MT32EMU_API_TYPE == 3
+
+#include "c_interface/cpp_interface.h"
+
+#else /* #if !defined(__cplusplus) || MT32EMU_API_TYPE == 1 */
+
+#include "Types.h"
+#include "File.h"
+#include "FileStream.h"
+#include "ROMInfo.h"
+#include "Synth.h"
+#include "MidiStreamParser.h"
+#include "SampleRateConverter.h"
+
+#if MT32EMU_RUNTIME_VERSION_CHECK == 1
+#include "VersionTagging.h"
 #endif
 
-#endif // #ifndef MT32EMU_MT32EMU_H
+#endif /* #if !defined(__cplusplus) || MT32EMU_API_TYPE == 1 */
+
+#if MT32EMU_RUNTIME_VERSION_CHECK == 2
+#include "VersionTagging.h"
+#endif
+
+#endif /* #ifndef MT32EMU_MT32EMU_H */
