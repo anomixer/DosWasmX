@@ -1,0 +1,3 @@
+@echo off
+echo Starting local web server for DOS Wasm X...
+npx http-server -p 8080
