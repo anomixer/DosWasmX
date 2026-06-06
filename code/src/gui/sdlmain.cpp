@@ -10607,6 +10607,7 @@ void runDosbox()
 void VOODOO_Destroy(Section* /*sec*/) {}
 void VOODOO_OnPowerOn(Section* /*sec*/) {}
 
+#if !defined(C_MT32)
 #include <midi.h>
 void MIDI_ListHandler(Program* caller, const char* name) {}
 DB_Midi midi;
@@ -10616,6 +10617,7 @@ bool MIDI_Available(void) {
 }
 void MIDI_GUI_OnSectionPropChange(Section* x) {}
 std::string sffile = "Not available";
+#endif
 
 void fmport_a_pic_event(Bitu val) {
 }
@@ -10631,7 +10633,9 @@ bool log_fileio = false;
 int log_dev_con = 0;
 
 void VOODOO_Init() {}
+#if !defined(C_MT32)
 void MIDI_Init(void) {}
+#endif
 bool Voodoo_OGL_Active() { return false;  }
 void Voodoo_Output_Enable(bool x) {}
 void LOG::EarlyInit(void) {}

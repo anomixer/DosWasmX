@@ -3,6 +3,7 @@ This is a browser based DOS emulator designed around ease of use and stability. 
 
 Supports the following features -
 - Fully web based application - using web assembly
+- Roland MT-32 MIDI Audio Emulation (using Munt/mt32emu)
 - Save hard drive to the browser (512mb, 1 gig, or 2 gig options)
 - Automatic support for a variety of file formats (Iso, Zip, Bin, Cue, Img, 7z)
 - Customize RAM (32mb, 64mb, 128mb)
@@ -138,7 +139,15 @@ DOS Wasm X supports installing Windows 95 or Windows 98 using your own copy of W
 
 ![screenshot](screenshots/win95error.PNG)
 
+# Roland MT-32 Support
+DOS Wasm X supports Roland MT-32 emulation out of the box using Munt (mt32emu).
+
+To enable MT-32 audio in games:
+1. Make sure your games are configured to use **Roland MT-32** or **LAPC-I** for music (usually configured via the game's `SETUP.EXE` or `INSTALL.EXE`).
+2. The emulator will automatically attempt to fetch `MT32_CONTROL.ROM` and `MT32_PCM.ROM` from your web server's root. Make sure to place these two ROM files in your `dist/` directory on your server.
+
 # Common DOS Commands
+
 - DIR - Display list of files and directories
 - CD - Change the current directory
 - XCOPY - Copy Files

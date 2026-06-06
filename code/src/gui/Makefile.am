@@ -13,6 +13,11 @@ libgui_a_SOURCES = \
 	menu.cpp menu_callback.cpp bitop.cpp ptrop.cpp zipcrc.c zipfile.cpp
 
 if C_MT32
+SUBDIRS += ../libs/mt32
+gui_SOURCES += midi_mt32.h
+endif
+
+if C_MT32
 AM_CPPFLAGS += -I$(top_srcdir)/src/libs/mt32
 
 libgui_a_SOURCES += \

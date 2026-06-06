@@ -906,6 +906,36 @@ class MyClass {
         console.log('main.ttf',responseText.length);
         Module.FS.writeFile('/res/arial.ttf',responseBytes);
 
+        // write MT-32 ROM files
+        try {
+            console.log('Fetching MT32_CONTROL.ROM...');
+            const controlRomRes = await fetch('MT32_CONTROL.ROM');
+            if (controlRomRes.ok) {
+                const controlRomBuf = await controlRomRes.arrayBuffer();
+                Module.FS.writeFile('/MT32_CONTROL.ROM', new Uint8Array(controlRomBuf));
+                console.log('MT32_CONTROL.ROM written successfully.');
+            } else {
+                console.warn('MT32_CONTROL.ROM not found on server.');
+            }
+        } catch (e) {
+            console.error('Failed to load MT32_CONTROL.ROM:', e);
+        }
+
+        try {
+            console.log('Fetching MT32_PCM.ROM...');
+            const pcmRomRes = await fetch('MT32_PCM.ROM');
+            if (pcmRomRes.ok) {
+                const pcmRomBuf = await pcmRomRes.arrayBuffer();
+                Module.FS.writeFile('/MT32_PCM.ROM', new Uint8Array(pcmRomBuf));
+                console.log('MT32_PCM.ROM written successfully.');
+            } else {
+                console.warn('MT32_PCM.ROM not found on server.');
+            }
+        } catch (e) {
+            console.error('Failed to load MT32_PCM.ROM:', e);
+        }
+
+
 
         //write dosbox.conf
         var rando = Math.floor(Math.random() * Math.floor(100000));
@@ -2933,6 +2963,10 @@ window.onunhandledrejection = function(error) {
 window["Module"] = {
     onRuntimeInitialized: myClass.initModule,
     print: (text) => myClass.processPrintStatement(text),
+    uncaught: (error) => {
+        console.error('Uncaught Asyncify/WASM error:', error);
+        myClass.onError(error.message || String(error));
+    }
 }
 
 //sleep module

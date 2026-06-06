@@ -233,6 +233,36 @@ CPPFILES := \
     src/shell/shell_batch.cpp \
     src/shell/shell_cmds.cpp \
     src/shell/shell_misc.cpp \
+    src/gui/midi.cpp \
+    src/libs/mt32/Analog.cpp \
+    src/libs/mt32/BReverbModel.cpp \
+    src/libs/mt32/Display.cpp \
+    src/libs/mt32/File.cpp \
+    src/libs/mt32/FileStream.cpp \
+    src/libs/mt32/LA32FloatWaveGenerator.cpp \
+    src/libs/mt32/LA32Ramp.cpp \
+    src/libs/mt32/LA32WaveGenerator.cpp \
+    src/libs/mt32/MidiStreamParser.cpp \
+    src/libs/mt32/Part.cpp \
+    src/libs/mt32/Partial.cpp \
+    src/libs/mt32/PartialManager.cpp \
+    src/libs/mt32/Poly.cpp \
+    src/libs/mt32/ROMInfo.cpp \
+    src/libs/mt32/SampleRateConverter.cpp \
+    src/libs/mt32/Synth.cpp \
+    src/libs/mt32/TVA.cpp \
+    src/libs/mt32/TVF.cpp \
+    src/libs/mt32/TVP.cpp \
+    src/libs/mt32/Tables.cpp \
+    src/libs/mt32/VersionTagging.cpp \
+    src/libs/mt32/sha1/sha1.cpp \
+    src/libs/mt32/c_interface/c_interface.cpp \
+    src/libs/mt32/srchelper/InternalResampler.cpp \
+    src/libs/mt32/srchelper/srctools/src/FIRResampler.cpp \
+    src/libs/mt32/srchelper/srctools/src/IIR2xResampler.cpp \
+    src/libs/mt32/srchelper/srctools/src/LinearResampler.cpp \
+    src/libs/mt32/srchelper/srctools/src/ResamplerModel.cpp \
+    src/libs/mt32/srchelper/srctools/src/SincResampler.cpp \
     myinput.cpp
 
 FILES := $(patsubst %.c,%.o,$(CFILES)) $(patsubst %.cpp,%.o,$(CPPFILES))
@@ -240,6 +270,12 @@ FILES := $(patsubst %.c,%.o,$(CFILES)) $(patsubst %.cpp,%.o,$(CPPFILES))
 MYFLAGS := \
     -I./include \
     -I./zlib \
+    -I./src/libs/mt32 \
+    -I./src/libs/mt32/srchelper \
+    -I./src/libs/mt32/srchelper/srctools/include \
+    -DC_MT32=1 \
+    -DC_MT32EMU=1 \
+    -DMT32EMU_WITH_INTERNAL_RESAMPLER=1 \
 	-D__LIBRETRO__ \
     -DC_EMSCRIPTEN \
     -DEMSCRIPTEN \
@@ -251,11 +287,18 @@ MYFLAGS := \
 	-Oz \
 	-fwasm-exceptions \
     -s USE_SDL=2 \
+    -s ASYNCIFY=1 \
     -std=c++14
 
 MYFLAGSC := \
     -I./include \
     -I./zlib \
+    -I./src/libs/mt32 \
+    -I./src/libs/mt32/srchelper \
+    -I./src/libs/mt32/srchelper/srctools/include \
+    -DC_MT32=1 \
+    -DC_MT32EMU=1 \
+    -DMT32EMU_WITH_INTERNAL_RESAMPLER=1 \
 	-D__LIBRETRO__ \
     -DC_EMSCRIPTEN \
     -DEMSCRIPTEN \
@@ -266,6 +309,7 @@ MYFLAGSC := \
 	-O3 \
     -Oz \
 	-fwasm-exceptions \
+    -s ASYNCIFY=1 \
     -s USE_SDL=2
 
 all: main.js
@@ -273,14 +317,14 @@ all: main.js
 	mv main.wasm ../dist/main.wasm
 
 main.js: $(FILES)
-	emcc -o $@ $(FILES) \
+	$(file >files.txt,$(FILES))
+	emcc -o $@ @files.txt \
 	-w \
 	-Werror=return-type \
 	-fsigned-char \
 	-O3 \
 	-DNDEBUG \
     -Oz \
-	-flto=thin \
 	-Wl,-u,htons \
 	-Wl,-u,ntohs \
 	-sTOTAL_STACK=1MB \
@@ -291,9 +335,10 @@ main.js: $(FILES)
 	-sALLOW_MEMORY_GROWTH=1 \
 	-sEXIT_RUNTIME=0 \
 	-sINVOKE_RUN=0 \
-	"-sEXTRA_EXPORTED_RUNTIME_METHODS=['addRunDependency', 'removeRunDependency','FS', \
+	"-sEXPORTED_RUNTIME_METHODS=['addRunDependency', 'removeRunDependency','FS', \
 	'FS_createPath', 'FS_createPreloadedFile', 'FS_createDataFile', 'lengthBytesUTF8', \
-	'stringToUTF8', 'UTF16ToString', 'UTF8ToString', 'callMain', 'err', 'cwrap']" \
+	'stringToUTF8', 'UTF16ToString', 'UTF8ToString', 'callMain', 'err', 'cwrap', \
+	'HEAPU8', 'HEAP16', 'HEAP32']" \
 	"-sEXPORTED_FUNCTIONS=['_main', '_malloc', '_free', '_abort', '_neilTurboMode', \
 	'_neil_update_autoexec_additional', \
 	'_neil_show_toast', \
@@ -320,12 +365,14 @@ main.js: $(FILES)
     '_neil_unserialize', \
 	'_neilNormalMode', '_neilSpeedUp', '_neilSlowDown', '_neil_update_cpu']" \
 	-sERROR_ON_UNDEFINED_SYMBOLS=1 \
+	--profiling \
 	-fwasm-exceptions \
 	-sUSE_ZLIB=1 \
 	-sUSE_SDL=2 \
 	-sASYNCIFY=1 \
 	"-sASYNCIFY_IMPORTS=['syncSleep']" \
 	-sASYNCIFY_WHITELIST=@asyncify.txt
+
 
 %.o : %.cpp
 	emcc -c $< -o $@ \
@@ -337,8 +384,7 @@ main.js: $(FILES)
 
 clean:
 	@echo "Cleaning"
-	@echo $(FILES)
-	rm -fr *.o */*.o */*/*.o */*/*/*.o */*/*/*/*.o
+	rm -fr *.o */*.o */*/*.o */*/*/*.o */*/*/*/*.o files.txt
 
 cleandata:
 	@echo "Cleaning data"
