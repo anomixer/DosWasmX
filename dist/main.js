@@ -348,10 +348,10 @@ function createWasm() {
  /** @param {WebAssembly.Module=} module*/ function receiveInstance(instance, module) {
   wasmExports = instance.exports;
   wasmExports = Asyncify.instrumentWasmExports(wasmExports);
-  wasmMemory = wasmExports["Xd"];
+  wasmMemory = wasmExports["Yd"];
   updateMemoryViews();
-  wasmTable = wasmExports["$d"];
-  addOnInit(wasmExports["Yd"]);
+  wasmTable = wasmExports["ae"];
+  addOnInit(wasmExports["Zd"]);
   removeRunDependency("wasm-instantiate");
   return wasmExports;
  }
@@ -376,49 +376,49 @@ var tempDouble;
 var tempI64;
 
 var ASM_CONSTS = {
- 5968827: () => {
+ 5973339: () => {
   myApp.SaveStateEvent();
  },
- 5968851: () => {
+ 5973363: () => {
   myApp.newRom();
  },
- 5968867: () => {
+ 5973379: () => {
   myApp.toggleFPS();
  },
- 5968886: () => {
+ 5973398: () => {
   myApp.slowDown();
  },
- 5968904: () => {
+ 5973416: () => {
   myApp.speedUp();
  },
- 5968921: () => {
+ 5973433: () => {
   myApp.mouseDecreaseSpeed();
  },
- 5968949: () => {
+ 5973461: () => {
   myApp.mouseIncreaseSpeed();
  },
- 5968977: () => {
+ 5973489: () => {
   myApp.toggleOnscreenKeyboard();
  },
- 5969009: () => {
+ 5973521: () => {
   myApp.exitToDos();
  },
- 5969028: () => {
+ 5973540: () => {
   myApp.saveHardDriveDiffs();
  },
- 5969056: () => {
+ 5973568: () => {
   myApp.updateCPU("max");
  },
- 5969080: () => {
+ 5973592: () => {
   myApp.togglePause();
  },
- 5969101: () => {
+ 5973613: () => {
   myApp.fullscreen();
  },
- 5969121: () => {
+ 5973633: () => {
   myApp.rivetsData.inputController.updateDosControls();
  },
- 5969175: $0 => {
+ 5973687: $0 => {
   var str = UTF8ToString($0) + "\n\n" + "Abort/Retry/Ignore/AlwaysIgnore? [ariA] :";
   var reply = window.prompt(str, "i");
   if (reply === null) {
@@ -426,7 +426,7 @@ var ASM_CONSTS = {
   }
   return allocate(intArrayFromString(reply), "i8", ALLOC_NORMAL);
  },
- 5969400: () => {
+ 5973912: () => {
   if (typeof (AudioContext) !== "undefined") {
    return true;
   } else if (typeof (webkitAudioContext) !== "undefined") {
@@ -434,7 +434,7 @@ var ASM_CONSTS = {
   }
   return false;
  },
- 5969547: () => {
+ 5974059: () => {
   if ((typeof (navigator.mediaDevices) !== "undefined") && (typeof (navigator.mediaDevices.getUserMedia) !== "undefined")) {
    return true;
   } else if (typeof (navigator.webkitGetUserMedia) !== "undefined") {
@@ -442,7 +442,7 @@ var ASM_CONSTS = {
   }
   return false;
  },
- 5969781: $0 => {
+ 5974293: $0 => {
   if (typeof (Module["SDL2"]) === "undefined") {
    Module["SDL2"] = {};
   }
@@ -464,11 +464,11 @@ var ASM_CONSTS = {
   }
   return SDL2.audioContext === undefined ? -1 : 0;
  },
- 5970274: () => {
+ 5974786: () => {
   var SDL2 = Module["SDL2"];
   return SDL2.audioContext.sampleRate;
  },
- 5970342: ($0, $1, $2, $3) => {
+ 5974854: ($0, $1, $2, $3) => {
   var SDL2 = Module["SDL2"];
   var have_microphone = function(stream) {
    if (SDL2.capture.silenceTimer !== undefined) {
@@ -509,7 +509,7 @@ var ASM_CONSTS = {
    }, have_microphone, no_microphone);
   }
  },
- 5971994: ($0, $1, $2, $3) => {
+ 5976506: ($0, $1, $2, $3) => {
   var SDL2 = Module["SDL2"];
   SDL2.audio.scriptProcessorNode = SDL2.audioContext["createScriptProcessor"]($1, 0, $0);
   SDL2.audio.scriptProcessorNode["onaudioprocess"] = function(e) {
@@ -521,7 +521,7 @@ var ASM_CONSTS = {
   };
   SDL2.audio.scriptProcessorNode["connect"](SDL2.audioContext["destination"]);
  },
- 5972404: ($0, $1) => {
+ 5976916: ($0, $1) => {
   var SDL2 = Module["SDL2"];
   var numChannels = SDL2.capture.currentCaptureBuffer.numberOfChannels;
   for (var c = 0; c < numChannels; ++c) {
@@ -540,7 +540,7 @@ var ASM_CONSTS = {
    }
   }
  },
- 5973009: ($0, $1) => {
+ 5977521: ($0, $1) => {
   var SDL2 = Module["SDL2"];
   var numChannels = SDL2.audio.currentOutputBuffer["numberOfChannels"];
   for (var c = 0; c < numChannels; ++c) {
@@ -553,7 +553,7 @@ var ASM_CONSTS = {
    }
   }
  },
- 5973489: $0 => {
+ 5978001: $0 => {
   var SDL2 = Module["SDL2"];
   if ($0) {
    if (SDL2.capture.silenceTimer !== undefined) {
@@ -591,7 +591,7 @@ var ASM_CONSTS = {
    SDL2.audioContext = undefined;
   }
  },
- 5974661: ($0, $1, $2) => {
+ 5979173: ($0, $1, $2) => {
   var w = $0;
   var h = $1;
   var pixels = $2;
@@ -662,7 +662,7 @@ var ASM_CONSTS = {
   }
   SDL2.ctx.putImageData(SDL2.image, 0, 0);
  },
- 5976130: ($0, $1, $2, $3, $4) => {
+ 5980642: ($0, $1, $2, $3, $4) => {
   var w = $0;
   var h = $1;
   var hot_x = $2;
@@ -699,18 +699,18 @@ var ASM_CONSTS = {
   stringToUTF8(url, urlBuf, url.length + 1);
   return urlBuf;
  },
- 5977119: $0 => {
+ 5981631: $0 => {
   if (Module["canvas"]) {
    Module["canvas"].style["cursor"] = UTF8ToString($0);
   }
  },
- 5977202: () => {
+ 5981714: () => {
   if (Module["canvas"]) {
    Module["canvas"].style["cursor"] = "none";
   }
  },
- 5977271: () => window.innerWidth,
- 5977301: () => window.innerHeight
+ 5981783: () => window.innerWidth,
+ 5981813: () => window.innerHeight
 };
 
 function syncSleep(ms, nonSkippable) {
@@ -7287,6 +7287,8 @@ var _emscripten_glViewport = _glViewport;
 
 var _emscripten_has_asyncify = () => 1;
 
+var _emscripten_memcpy_js = (dest, src, num) => HEAPU8.copyWithin(dest, src, src + num);
+
 var doRequestFullscreen = (target, strategy) => {
  if (!JSEvents.fullscreenEnabled()) return -1;
  target = findEventTarget(target);
@@ -8619,222 +8621,223 @@ for (/**@suppress{duplicate}*/ var i = 0; i < 288; ++i) {
 
 var wasmImports = {
  /** @export */ a: ___assert_fail,
- /** @export */ Wd: ___syscall_chdir,
- /** @export */ Vd: ___syscall_chmod,
- /** @export */ Ud: ___syscall_faccessat,
+ /** @export */ Xd: ___syscall_chdir,
+ /** @export */ Wd: ___syscall_chmod,
+ /** @export */ Vd: ___syscall_faccessat,
  /** @export */ f: ___syscall_fcntl64,
- /** @export */ Td: ___syscall_fstat64,
+ /** @export */ Ud: ___syscall_fstat64,
  /** @export */ da: ___syscall_ftruncate64,
- /** @export */ Sd: ___syscall_getcwd,
- /** @export */ Rd: ___syscall_getdents64,
+ /** @export */ Td: ___syscall_getcwd,
+ /** @export */ Sd: ___syscall_getdents64,
  /** @export */ W: ___syscall_ioctl,
- /** @export */ Qd: ___syscall_lstat64,
- /** @export */ Pd: ___syscall_mkdirat,
- /** @export */ Od: ___syscall_newfstatat,
+ /** @export */ Rd: ___syscall_lstat64,
+ /** @export */ Qd: ___syscall_mkdirat,
+ /** @export */ Pd: ___syscall_newfstatat,
  /** @export */ V: ___syscall_openat,
- /** @export */ Nd: ___syscall_readlinkat,
- /** @export */ Md: ___syscall_renameat,
+ /** @export */ Od: ___syscall_readlinkat,
+ /** @export */ Nd: ___syscall_renameat,
  /** @export */ U: ___syscall_rmdir,
- /** @export */ Ld: ___syscall_stat64,
- /** @export */ Kd: ___syscall_statfs64,
+ /** @export */ Md: ___syscall_stat64,
+ /** @export */ Ld: ___syscall_statfs64,
  /** @export */ T: ___syscall_unlinkat,
- /** @export */ Jd: ___syscall_utimensat,
- /** @export */ Fd: __emscripten_get_now_is_monotonic,
+ /** @export */ Kd: ___syscall_utimensat,
+ /** @export */ Gd: __emscripten_get_now_is_monotonic,
  /** @export */ ba: __gmtime_js,
  /** @export */ aa: __localtime_js,
  /** @export */ $: __mktime_js,
- /** @export */ Ed: __tzset_js,
+ /** @export */ Fd: __tzset_js,
  /** @export */ b: _abort,
- /** @export */ Dd: _eglBindAPI,
- /** @export */ Cd: _eglChooseConfig,
- /** @export */ Bd: _eglCreateContext,
- /** @export */ Ad: _eglCreateWindowSurface,
- /** @export */ zd: _eglDestroyContext,
- /** @export */ yd: _eglDestroySurface,
- /** @export */ xd: _eglGetConfigAttrib,
+ /** @export */ Ed: _eglBindAPI,
+ /** @export */ Dd: _eglChooseConfig,
+ /** @export */ Cd: _eglCreateContext,
+ /** @export */ Bd: _eglCreateWindowSurface,
+ /** @export */ Ad: _eglDestroyContext,
+ /** @export */ zd: _eglDestroySurface,
+ /** @export */ yd: _eglGetConfigAttrib,
  /** @export */ R: _eglGetDisplay,
- /** @export */ wd: _eglGetError,
- /** @export */ vd: _eglInitialize,
- /** @export */ ud: _eglMakeCurrent,
- /** @export */ td: _eglQueryString,
- /** @export */ sd: _eglSwapBuffers,
- /** @export */ rd: _eglSwapInterval,
- /** @export */ qd: _eglTerminate,
- /** @export */ pd: _eglWaitGL,
- /** @export */ od: _eglWaitNative,
+ /** @export */ xd: _eglGetError,
+ /** @export */ wd: _eglInitialize,
+ /** @export */ vd: _eglMakeCurrent,
+ /** @export */ ud: _eglQueryString,
+ /** @export */ td: _eglSwapBuffers,
+ /** @export */ sd: _eglSwapInterval,
+ /** @export */ rd: _eglTerminate,
+ /** @export */ qd: _eglWaitGL,
+ /** @export */ pd: _eglWaitNative,
  /** @export */ d: _emscripten_asm_const_int,
  /** @export */ e: _emscripten_asm_const_int_sync_on_main_thread,
  /** @export */ p: _emscripten_date_now,
- /** @export */ nd: _emscripten_exit_fullscreen,
- /** @export */ md: _emscripten_exit_pointerlock,
+ /** @export */ od: _emscripten_exit_fullscreen,
+ /** @export */ nd: _emscripten_exit_pointerlock,
  /** @export */ k: _emscripten_get_device_pixel_ratio,
  /** @export */ g: _emscripten_get_element_css_size,
  /** @export */ Q: _emscripten_get_gamepad_status,
  /** @export */ o: _emscripten_get_now,
- /** @export */ ld: _emscripten_get_num_gamepads,
- /** @export */ kd: _emscripten_get_screen_size,
- /** @export */ jd: _emscripten_glActiveTexture,
- /** @export */ id: _emscripten_glAttachShader,
- /** @export */ hd: _emscripten_glBeginQueryEXT,
- /** @export */ gd: _emscripten_glBindAttribLocation,
- /** @export */ fd: _emscripten_glBindBuffer,
- /** @export */ ed: _emscripten_glBindFramebuffer,
- /** @export */ dd: _emscripten_glBindRenderbuffer,
- /** @export */ cd: _emscripten_glBindTexture,
- /** @export */ bd: _emscripten_glBindVertexArrayOES,
- /** @export */ ad: _emscripten_glBlendColor,
- /** @export */ $c: _emscripten_glBlendEquation,
- /** @export */ _c: _emscripten_glBlendEquationSeparate,
- /** @export */ Zc: _emscripten_glBlendFunc,
- /** @export */ Yc: _emscripten_glBlendFuncSeparate,
- /** @export */ Xc: _emscripten_glBufferData,
- /** @export */ Wc: _emscripten_glBufferSubData,
- /** @export */ Vc: _emscripten_glCheckFramebufferStatus,
- /** @export */ Uc: _emscripten_glClear,
- /** @export */ Tc: _emscripten_glClearColor,
- /** @export */ Sc: _emscripten_glClearDepthf,
- /** @export */ Rc: _emscripten_glClearStencil,
- /** @export */ Qc: _emscripten_glColorMask,
- /** @export */ Pc: _emscripten_glCompileShader,
- /** @export */ Oc: _emscripten_glCompressedTexImage2D,
- /** @export */ Nc: _emscripten_glCompressedTexSubImage2D,
- /** @export */ Mc: _emscripten_glCopyTexImage2D,
- /** @export */ Lc: _emscripten_glCopyTexSubImage2D,
- /** @export */ Kc: _emscripten_glCreateProgram,
- /** @export */ Jc: _emscripten_glCreateShader,
- /** @export */ Ic: _emscripten_glCullFace,
- /** @export */ Hc: _emscripten_glDeleteBuffers,
- /** @export */ Gc: _emscripten_glDeleteFramebuffers,
- /** @export */ Fc: _emscripten_glDeleteProgram,
- /** @export */ Ec: _emscripten_glDeleteQueriesEXT,
- /** @export */ Dc: _emscripten_glDeleteRenderbuffers,
- /** @export */ Cc: _emscripten_glDeleteShader,
- /** @export */ Bc: _emscripten_glDeleteTextures,
- /** @export */ Ac: _emscripten_glDeleteVertexArraysOES,
- /** @export */ zc: _emscripten_glDepthFunc,
- /** @export */ yc: _emscripten_glDepthMask,
- /** @export */ xc: _emscripten_glDepthRangef,
- /** @export */ wc: _emscripten_glDetachShader,
- /** @export */ vc: _emscripten_glDisable,
- /** @export */ uc: _emscripten_glDisableVertexAttribArray,
- /** @export */ tc: _emscripten_glDrawArrays,
- /** @export */ sc: _emscripten_glDrawArraysInstancedANGLE,
- /** @export */ rc: _emscripten_glDrawBuffersWEBGL,
- /** @export */ qc: _emscripten_glDrawElements,
- /** @export */ pc: _emscripten_glDrawElementsInstancedANGLE,
- /** @export */ oc: _emscripten_glEnable,
- /** @export */ nc: _emscripten_glEnableVertexAttribArray,
- /** @export */ mc: _emscripten_glEndQueryEXT,
- /** @export */ lc: _emscripten_glFinish,
- /** @export */ kc: _emscripten_glFlush,
- /** @export */ jc: _emscripten_glFramebufferRenderbuffer,
- /** @export */ ic: _emscripten_glFramebufferTexture2D,
- /** @export */ hc: _emscripten_glFrontFace,
- /** @export */ gc: _emscripten_glGenBuffers,
- /** @export */ fc: _emscripten_glGenFramebuffers,
- /** @export */ ec: _emscripten_glGenQueriesEXT,
- /** @export */ dc: _emscripten_glGenRenderbuffers,
- /** @export */ cc: _emscripten_glGenTextures,
- /** @export */ bc: _emscripten_glGenVertexArraysOES,
- /** @export */ ac: _emscripten_glGenerateMipmap,
- /** @export */ $b: _emscripten_glGetActiveAttrib,
- /** @export */ _b: _emscripten_glGetActiveUniform,
- /** @export */ Zb: _emscripten_glGetAttachedShaders,
- /** @export */ Yb: _emscripten_glGetAttribLocation,
- /** @export */ Xb: _emscripten_glGetBooleanv,
- /** @export */ Wb: _emscripten_glGetBufferParameteriv,
- /** @export */ Vb: _emscripten_glGetError,
- /** @export */ Ub: _emscripten_glGetFloatv,
- /** @export */ Tb: _emscripten_glGetFramebufferAttachmentParameteriv,
- /** @export */ Sb: _emscripten_glGetIntegerv,
- /** @export */ Rb: _emscripten_glGetProgramInfoLog,
- /** @export */ Qb: _emscripten_glGetProgramiv,
- /** @export */ Pb: _emscripten_glGetQueryObjecti64vEXT,
- /** @export */ Ob: _emscripten_glGetQueryObjectivEXT,
- /** @export */ Nb: _emscripten_glGetQueryObjectui64vEXT,
- /** @export */ Mb: _emscripten_glGetQueryObjectuivEXT,
- /** @export */ Lb: _emscripten_glGetQueryivEXT,
- /** @export */ Kb: _emscripten_glGetRenderbufferParameteriv,
- /** @export */ Jb: _emscripten_glGetShaderInfoLog,
- /** @export */ Ib: _emscripten_glGetShaderPrecisionFormat,
- /** @export */ Hb: _emscripten_glGetShaderSource,
- /** @export */ Gb: _emscripten_glGetShaderiv,
- /** @export */ Fb: _emscripten_glGetString,
- /** @export */ Eb: _emscripten_glGetTexParameterfv,
- /** @export */ Db: _emscripten_glGetTexParameteriv,
- /** @export */ Cb: _emscripten_glGetUniformLocation,
- /** @export */ Bb: _emscripten_glGetUniformfv,
- /** @export */ Ab: _emscripten_glGetUniformiv,
- /** @export */ zb: _emscripten_glGetVertexAttribPointerv,
- /** @export */ yb: _emscripten_glGetVertexAttribfv,
- /** @export */ xb: _emscripten_glGetVertexAttribiv,
- /** @export */ wb: _emscripten_glHint,
- /** @export */ vb: _emscripten_glIsBuffer,
- /** @export */ ub: _emscripten_glIsEnabled,
- /** @export */ tb: _emscripten_glIsFramebuffer,
- /** @export */ sb: _emscripten_glIsProgram,
- /** @export */ rb: _emscripten_glIsQueryEXT,
- /** @export */ qb: _emscripten_glIsRenderbuffer,
- /** @export */ pb: _emscripten_glIsShader,
- /** @export */ ob: _emscripten_glIsTexture,
- /** @export */ nb: _emscripten_glIsVertexArrayOES,
- /** @export */ mb: _emscripten_glLineWidth,
- /** @export */ lb: _emscripten_glLinkProgram,
- /** @export */ kb: _emscripten_glPixelStorei,
- /** @export */ jb: _emscripten_glPolygonOffset,
- /** @export */ ib: _emscripten_glQueryCounterEXT,
- /** @export */ hb: _emscripten_glReadPixels,
- /** @export */ gb: _emscripten_glReleaseShaderCompiler,
- /** @export */ fb: _emscripten_glRenderbufferStorage,
- /** @export */ eb: _emscripten_glSampleCoverage,
- /** @export */ db: _emscripten_glScissor,
- /** @export */ cb: _emscripten_glShaderBinary,
- /** @export */ bb: _emscripten_glShaderSource,
- /** @export */ ab: _emscripten_glStencilFunc,
- /** @export */ $a: _emscripten_glStencilFuncSeparate,
- /** @export */ _a: _emscripten_glStencilMask,
- /** @export */ Za: _emscripten_glStencilMaskSeparate,
- /** @export */ Ya: _emscripten_glStencilOp,
- /** @export */ Xa: _emscripten_glStencilOpSeparate,
- /** @export */ Wa: _emscripten_glTexImage2D,
- /** @export */ Va: _emscripten_glTexParameterf,
- /** @export */ Ua: _emscripten_glTexParameterfv,
- /** @export */ Ta: _emscripten_glTexParameteri,
- /** @export */ Sa: _emscripten_glTexParameteriv,
- /** @export */ Ra: _emscripten_glTexSubImage2D,
- /** @export */ Qa: _emscripten_glUniform1f,
- /** @export */ Pa: _emscripten_glUniform1fv,
- /** @export */ Oa: _emscripten_glUniform1i,
- /** @export */ Na: _emscripten_glUniform1iv,
- /** @export */ Ma: _emscripten_glUniform2f,
- /** @export */ La: _emscripten_glUniform2fv,
- /** @export */ Ka: _emscripten_glUniform2i,
- /** @export */ Ja: _emscripten_glUniform2iv,
- /** @export */ Ia: _emscripten_glUniform3f,
- /** @export */ Ha: _emscripten_glUniform3fv,
- /** @export */ Ga: _emscripten_glUniform3i,
- /** @export */ Fa: _emscripten_glUniform3iv,
- /** @export */ Ea: _emscripten_glUniform4f,
- /** @export */ Da: _emscripten_glUniform4fv,
- /** @export */ Ca: _emscripten_glUniform4i,
- /** @export */ Ba: _emscripten_glUniform4iv,
- /** @export */ Aa: _emscripten_glUniformMatrix2fv,
- /** @export */ za: _emscripten_glUniformMatrix3fv,
- /** @export */ ya: _emscripten_glUniformMatrix4fv,
- /** @export */ xa: _emscripten_glUseProgram,
- /** @export */ wa: _emscripten_glValidateProgram,
- /** @export */ va: _emscripten_glVertexAttrib1f,
- /** @export */ ua: _emscripten_glVertexAttrib1fv,
- /** @export */ ta: _emscripten_glVertexAttrib2f,
- /** @export */ sa: _emscripten_glVertexAttrib2fv,
- /** @export */ ra: _emscripten_glVertexAttrib3f,
- /** @export */ qa: _emscripten_glVertexAttrib3fv,
- /** @export */ pa: _emscripten_glVertexAttrib4f,
- /** @export */ oa: _emscripten_glVertexAttrib4fv,
- /** @export */ na: _emscripten_glVertexAttribDivisorANGLE,
- /** @export */ ma: _emscripten_glVertexAttribPointer,
- /** @export */ la: _emscripten_glViewport,
+ /** @export */ md: _emscripten_get_num_gamepads,
+ /** @export */ ld: _emscripten_get_screen_size,
+ /** @export */ kd: _emscripten_glActiveTexture,
+ /** @export */ jd: _emscripten_glAttachShader,
+ /** @export */ id: _emscripten_glBeginQueryEXT,
+ /** @export */ hd: _emscripten_glBindAttribLocation,
+ /** @export */ gd: _emscripten_glBindBuffer,
+ /** @export */ fd: _emscripten_glBindFramebuffer,
+ /** @export */ ed: _emscripten_glBindRenderbuffer,
+ /** @export */ dd: _emscripten_glBindTexture,
+ /** @export */ cd: _emscripten_glBindVertexArrayOES,
+ /** @export */ bd: _emscripten_glBlendColor,
+ /** @export */ ad: _emscripten_glBlendEquation,
+ /** @export */ $c: _emscripten_glBlendEquationSeparate,
+ /** @export */ _c: _emscripten_glBlendFunc,
+ /** @export */ Zc: _emscripten_glBlendFuncSeparate,
+ /** @export */ Yc: _emscripten_glBufferData,
+ /** @export */ Xc: _emscripten_glBufferSubData,
+ /** @export */ Wc: _emscripten_glCheckFramebufferStatus,
+ /** @export */ Vc: _emscripten_glClear,
+ /** @export */ Uc: _emscripten_glClearColor,
+ /** @export */ Tc: _emscripten_glClearDepthf,
+ /** @export */ Sc: _emscripten_glClearStencil,
+ /** @export */ Rc: _emscripten_glColorMask,
+ /** @export */ Qc: _emscripten_glCompileShader,
+ /** @export */ Pc: _emscripten_glCompressedTexImage2D,
+ /** @export */ Oc: _emscripten_glCompressedTexSubImage2D,
+ /** @export */ Nc: _emscripten_glCopyTexImage2D,
+ /** @export */ Mc: _emscripten_glCopyTexSubImage2D,
+ /** @export */ Lc: _emscripten_glCreateProgram,
+ /** @export */ Kc: _emscripten_glCreateShader,
+ /** @export */ Jc: _emscripten_glCullFace,
+ /** @export */ Ic: _emscripten_glDeleteBuffers,
+ /** @export */ Hc: _emscripten_glDeleteFramebuffers,
+ /** @export */ Gc: _emscripten_glDeleteProgram,
+ /** @export */ Fc: _emscripten_glDeleteQueriesEXT,
+ /** @export */ Ec: _emscripten_glDeleteRenderbuffers,
+ /** @export */ Dc: _emscripten_glDeleteShader,
+ /** @export */ Cc: _emscripten_glDeleteTextures,
+ /** @export */ Bc: _emscripten_glDeleteVertexArraysOES,
+ /** @export */ Ac: _emscripten_glDepthFunc,
+ /** @export */ zc: _emscripten_glDepthMask,
+ /** @export */ yc: _emscripten_glDepthRangef,
+ /** @export */ xc: _emscripten_glDetachShader,
+ /** @export */ wc: _emscripten_glDisable,
+ /** @export */ vc: _emscripten_glDisableVertexAttribArray,
+ /** @export */ uc: _emscripten_glDrawArrays,
+ /** @export */ tc: _emscripten_glDrawArraysInstancedANGLE,
+ /** @export */ sc: _emscripten_glDrawBuffersWEBGL,
+ /** @export */ rc: _emscripten_glDrawElements,
+ /** @export */ qc: _emscripten_glDrawElementsInstancedANGLE,
+ /** @export */ pc: _emscripten_glEnable,
+ /** @export */ oc: _emscripten_glEnableVertexAttribArray,
+ /** @export */ nc: _emscripten_glEndQueryEXT,
+ /** @export */ mc: _emscripten_glFinish,
+ /** @export */ lc: _emscripten_glFlush,
+ /** @export */ kc: _emscripten_glFramebufferRenderbuffer,
+ /** @export */ jc: _emscripten_glFramebufferTexture2D,
+ /** @export */ ic: _emscripten_glFrontFace,
+ /** @export */ hc: _emscripten_glGenBuffers,
+ /** @export */ gc: _emscripten_glGenFramebuffers,
+ /** @export */ fc: _emscripten_glGenQueriesEXT,
+ /** @export */ ec: _emscripten_glGenRenderbuffers,
+ /** @export */ dc: _emscripten_glGenTextures,
+ /** @export */ cc: _emscripten_glGenVertexArraysOES,
+ /** @export */ bc: _emscripten_glGenerateMipmap,
+ /** @export */ ac: _emscripten_glGetActiveAttrib,
+ /** @export */ $b: _emscripten_glGetActiveUniform,
+ /** @export */ _b: _emscripten_glGetAttachedShaders,
+ /** @export */ Zb: _emscripten_glGetAttribLocation,
+ /** @export */ Yb: _emscripten_glGetBooleanv,
+ /** @export */ Xb: _emscripten_glGetBufferParameteriv,
+ /** @export */ Wb: _emscripten_glGetError,
+ /** @export */ Vb: _emscripten_glGetFloatv,
+ /** @export */ Ub: _emscripten_glGetFramebufferAttachmentParameteriv,
+ /** @export */ Tb: _emscripten_glGetIntegerv,
+ /** @export */ Sb: _emscripten_glGetProgramInfoLog,
+ /** @export */ Rb: _emscripten_glGetProgramiv,
+ /** @export */ Qb: _emscripten_glGetQueryObjecti64vEXT,
+ /** @export */ Pb: _emscripten_glGetQueryObjectivEXT,
+ /** @export */ Ob: _emscripten_glGetQueryObjectui64vEXT,
+ /** @export */ Nb: _emscripten_glGetQueryObjectuivEXT,
+ /** @export */ Mb: _emscripten_glGetQueryivEXT,
+ /** @export */ Lb: _emscripten_glGetRenderbufferParameteriv,
+ /** @export */ Kb: _emscripten_glGetShaderInfoLog,
+ /** @export */ Jb: _emscripten_glGetShaderPrecisionFormat,
+ /** @export */ Ib: _emscripten_glGetShaderSource,
+ /** @export */ Hb: _emscripten_glGetShaderiv,
+ /** @export */ Gb: _emscripten_glGetString,
+ /** @export */ Fb: _emscripten_glGetTexParameterfv,
+ /** @export */ Eb: _emscripten_glGetTexParameteriv,
+ /** @export */ Db: _emscripten_glGetUniformLocation,
+ /** @export */ Cb: _emscripten_glGetUniformfv,
+ /** @export */ Bb: _emscripten_glGetUniformiv,
+ /** @export */ Ab: _emscripten_glGetVertexAttribPointerv,
+ /** @export */ zb: _emscripten_glGetVertexAttribfv,
+ /** @export */ yb: _emscripten_glGetVertexAttribiv,
+ /** @export */ xb: _emscripten_glHint,
+ /** @export */ wb: _emscripten_glIsBuffer,
+ /** @export */ vb: _emscripten_glIsEnabled,
+ /** @export */ ub: _emscripten_glIsFramebuffer,
+ /** @export */ tb: _emscripten_glIsProgram,
+ /** @export */ sb: _emscripten_glIsQueryEXT,
+ /** @export */ rb: _emscripten_glIsRenderbuffer,
+ /** @export */ qb: _emscripten_glIsShader,
+ /** @export */ pb: _emscripten_glIsTexture,
+ /** @export */ ob: _emscripten_glIsVertexArrayOES,
+ /** @export */ nb: _emscripten_glLineWidth,
+ /** @export */ mb: _emscripten_glLinkProgram,
+ /** @export */ lb: _emscripten_glPixelStorei,
+ /** @export */ kb: _emscripten_glPolygonOffset,
+ /** @export */ jb: _emscripten_glQueryCounterEXT,
+ /** @export */ ib: _emscripten_glReadPixels,
+ /** @export */ hb: _emscripten_glReleaseShaderCompiler,
+ /** @export */ gb: _emscripten_glRenderbufferStorage,
+ /** @export */ fb: _emscripten_glSampleCoverage,
+ /** @export */ eb: _emscripten_glScissor,
+ /** @export */ db: _emscripten_glShaderBinary,
+ /** @export */ cb: _emscripten_glShaderSource,
+ /** @export */ bb: _emscripten_glStencilFunc,
+ /** @export */ ab: _emscripten_glStencilFuncSeparate,
+ /** @export */ $a: _emscripten_glStencilMask,
+ /** @export */ _a: _emscripten_glStencilMaskSeparate,
+ /** @export */ Za: _emscripten_glStencilOp,
+ /** @export */ Ya: _emscripten_glStencilOpSeparate,
+ /** @export */ Xa: _emscripten_glTexImage2D,
+ /** @export */ Wa: _emscripten_glTexParameterf,
+ /** @export */ Va: _emscripten_glTexParameterfv,
+ /** @export */ Ua: _emscripten_glTexParameteri,
+ /** @export */ Ta: _emscripten_glTexParameteriv,
+ /** @export */ Sa: _emscripten_glTexSubImage2D,
+ /** @export */ Ra: _emscripten_glUniform1f,
+ /** @export */ Qa: _emscripten_glUniform1fv,
+ /** @export */ Pa: _emscripten_glUniform1i,
+ /** @export */ Oa: _emscripten_glUniform1iv,
+ /** @export */ Na: _emscripten_glUniform2f,
+ /** @export */ Ma: _emscripten_glUniform2fv,
+ /** @export */ La: _emscripten_glUniform2i,
+ /** @export */ Ka: _emscripten_glUniform2iv,
+ /** @export */ Ja: _emscripten_glUniform3f,
+ /** @export */ Ia: _emscripten_glUniform3fv,
+ /** @export */ Ha: _emscripten_glUniform3i,
+ /** @export */ Ga: _emscripten_glUniform3iv,
+ /** @export */ Fa: _emscripten_glUniform4f,
+ /** @export */ Ea: _emscripten_glUniform4fv,
+ /** @export */ Da: _emscripten_glUniform4i,
+ /** @export */ Ca: _emscripten_glUniform4iv,
+ /** @export */ Ba: _emscripten_glUniformMatrix2fv,
+ /** @export */ Aa: _emscripten_glUniformMatrix3fv,
+ /** @export */ za: _emscripten_glUniformMatrix4fv,
+ /** @export */ ya: _emscripten_glUseProgram,
+ /** @export */ xa: _emscripten_glValidateProgram,
+ /** @export */ wa: _emscripten_glVertexAttrib1f,
+ /** @export */ va: _emscripten_glVertexAttrib1fv,
+ /** @export */ ua: _emscripten_glVertexAttrib2f,
+ /** @export */ ta: _emscripten_glVertexAttrib2fv,
+ /** @export */ sa: _emscripten_glVertexAttrib3f,
+ /** @export */ ra: _emscripten_glVertexAttrib3fv,
+ /** @export */ qa: _emscripten_glVertexAttrib4f,
+ /** @export */ pa: _emscripten_glVertexAttrib4fv,
+ /** @export */ oa: _emscripten_glVertexAttribDivisorANGLE,
+ /** @export */ na: _emscripten_glVertexAttribPointer,
+ /** @export */ ma: _emscripten_glViewport,
  /** @export */ n: _emscripten_has_asyncify,
+ /** @export */ la: _emscripten_memcpy_js,
  /** @export */ ka: _emscripten_request_fullscreen_strategy,
  /** @export */ P: _emscripten_request_pointerlock,
  /** @export */ ja: _emscripten_resize_heap,
@@ -8865,13 +8868,13 @@ var wasmImports = {
  /** @export */ s: _emscripten_set_wheel_callback_on_thread,
  /** @export */ ia: _emscripten_set_window_title,
  /** @export */ i: _emscripten_sleep,
- /** @export */ Id: _environ_get,
- /** @export */ Hd: _environ_sizes_get,
+ /** @export */ Jd: _environ_get,
+ /** @export */ Id: _environ_sizes_get,
  /** @export */ c: _exit,
  /** @export */ l: _fd_close,
  /** @export */ S: _fd_read,
  /** @export */ ca: _fd_seek,
- /** @export */ Gd: _fd_sync,
+ /** @export */ Hd: _fd_sync,
  /** @export */ q: _fd_write,
  /** @export */ ha: initMessageSyncSleep,
  /** @export */ ga: initTimeoutSyncSleep,
@@ -8887,183 +8890,185 @@ var wasmImports = {
 
 var wasmExports = createWasm();
 
-var ___wasm_call_ctors = () => (___wasm_call_ctors = wasmExports["Yd"])();
+var ___wasm_call_ctors = () => (___wasm_call_ctors = wasmExports["Zd"])();
 
-var _free = Module["_free"] = a0 => (_free = Module["_free"] = wasmExports["Zd"])(a0);
+var _free = Module["_free"] = a0 => (_free = Module["_free"] = wasmExports["_d"])(a0);
 
-var _malloc = Module["_malloc"] = a0 => (_malloc = Module["_malloc"] = wasmExports["_d"])(a0);
+var _malloc = Module["_malloc"] = a0 => (_malloc = Module["_malloc"] = wasmExports["$d"])(a0);
 
-var ___errno_location = () => (___errno_location = wasmExports["ae"])();
+var ___errno_location = () => (___errno_location = wasmExports["be"])();
 
-var _neilTurboMode = Module["_neilTurboMode"] = () => (_neilTurboMode = Module["_neilTurboMode"] = wasmExports["be"])();
+var _neilTurboMode = Module["_neilTurboMode"] = () => (_neilTurboMode = Module["_neilTurboMode"] = wasmExports["ce"])();
 
-var _neilNormalMode = Module["_neilNormalMode"] = () => (_neilNormalMode = Module["_neilNormalMode"] = wasmExports["ce"])();
+var _neilNormalMode = Module["_neilNormalMode"] = () => (_neilNormalMode = Module["_neilNormalMode"] = wasmExports["de"])();
 
-var _neilSpeedUp = Module["_neilSpeedUp"] = () => (_neilSpeedUp = Module["_neilSpeedUp"] = wasmExports["de"])();
+var _neilSpeedUp = Module["_neilSpeedUp"] = () => (_neilSpeedUp = Module["_neilSpeedUp"] = wasmExports["ee"])();
 
-var _neilSlowDown = Module["_neilSlowDown"] = () => (_neilSlowDown = Module["_neilSlowDown"] = wasmExports["ee"])();
+var _neilSlowDown = Module["_neilSlowDown"] = () => (_neilSlowDown = Module["_neilSlowDown"] = wasmExports["fe"])();
 
-var _getAndResetCycles = Module["_getAndResetCycles"] = () => (_getAndResetCycles = Module["_getAndResetCycles"] = wasmExports["fe"])();
+var _getAndResetCycles = Module["_getAndResetCycles"] = () => (_getAndResetCycles = Module["_getAndResetCycles"] = wasmExports["ge"])();
 
-var _main = Module["_main"] = (a0, a1) => (_main = Module["_main"] = wasmExports["ge"])(a0, a1);
+var _main = Module["_main"] = (a0, a1) => (_main = Module["_main"] = wasmExports["he"])(a0, a1);
 
-var _neil_toggle_onscreenkeyboard = Module["_neil_toggle_onscreenkeyboard"] = () => (_neil_toggle_onscreenkeyboard = Module["_neil_toggle_onscreenkeyboard"] = wasmExports["he"])();
+var _neil_toggle_onscreenkeyboard = Module["_neil_toggle_onscreenkeyboard"] = () => (_neil_toggle_onscreenkeyboard = Module["_neil_toggle_onscreenkeyboard"] = wasmExports["ie"])();
 
-var _neil_decrease_mouse_sensitivity = Module["_neil_decrease_mouse_sensitivity"] = () => (_neil_decrease_mouse_sensitivity = Module["_neil_decrease_mouse_sensitivity"] = wasmExports["ie"])();
+var _neil_decrease_mouse_sensitivity = Module["_neil_decrease_mouse_sensitivity"] = () => (_neil_decrease_mouse_sensitivity = Module["_neil_decrease_mouse_sensitivity"] = wasmExports["je"])();
 
-var _neil_increase_mouse_sensitivity = Module["_neil_increase_mouse_sensitivity"] = () => (_neil_increase_mouse_sensitivity = Module["_neil_increase_mouse_sensitivity"] = wasmExports["je"])();
+var _neil_increase_mouse_sensitivity = Module["_neil_increase_mouse_sensitivity"] = () => (_neil_increase_mouse_sensitivity = Module["_neil_increase_mouse_sensitivity"] = wasmExports["ke"])();
 
-var _neil_toggle_fps = Module["_neil_toggle_fps"] = () => (_neil_toggle_fps = Module["_neil_toggle_fps"] = wasmExports["ke"])();
+var _neil_toggle_fps = Module["_neil_toggle_fps"] = () => (_neil_toggle_fps = Module["_neil_toggle_fps"] = wasmExports["le"])();
 
-var _neil_export_files = Module["_neil_export_files"] = () => (_neil_export_files = Module["_neil_export_files"] = wasmExports["le"])();
+var _neil_export_files = Module["_neil_export_files"] = () => (_neil_export_files = Module["_neil_export_files"] = wasmExports["me"])();
 
-var _neil_clear_autoexec = Module["_neil_clear_autoexec"] = () => (_neil_clear_autoexec = Module["_neil_clear_autoexec"] = wasmExports["me"])();
+var _neil_clear_autoexec = Module["_neil_clear_autoexec"] = () => (_neil_clear_autoexec = Module["_neil_clear_autoexec"] = wasmExports["ne"])();
 
-var _neil_exit_to_dos = Module["_neil_exit_to_dos"] = () => (_neil_exit_to_dos = Module["_neil_exit_to_dos"] = wasmExports["ne"])();
+var _neil_exit_to_dos = Module["_neil_exit_to_dos"] = () => (_neil_exit_to_dos = Module["_neil_exit_to_dos"] = wasmExports["oe"])();
 
-var _neil_force_reset = Module["_neil_force_reset"] = () => (_neil_force_reset = Module["_neil_force_reset"] = wasmExports["oe"])();
+var _neil_force_reset = Module["_neil_force_reset"] = () => (_neil_force_reset = Module["_neil_force_reset"] = wasmExports["pe"])();
 
-var _neil_toggle_pause = Module["_neil_toggle_pause"] = () => (_neil_toggle_pause = Module["_neil_toggle_pause"] = wasmExports["pe"])();
+var _neil_toggle_pause = Module["_neil_toggle_pause"] = () => (_neil_toggle_pause = Module["_neil_toggle_pause"] = wasmExports["qe"])();
 
-var _neil_update_cpu = Module["_neil_update_cpu"] = a0 => (_neil_update_cpu = Module["_neil_update_cpu"] = wasmExports["qe"])(a0);
+var _neil_update_cpu = Module["_neil_update_cpu"] = a0 => (_neil_update_cpu = Module["_neil_update_cpu"] = wasmExports["re"])(a0);
 
-var _neil_send_ctrlaltdel = Module["_neil_send_ctrlaltdel"] = () => (_neil_send_ctrlaltdel = Module["_neil_send_ctrlaltdel"] = wasmExports["re"])();
+var _neil_send_ctrlaltdel = Module["_neil_send_ctrlaltdel"] = () => (_neil_send_ctrlaltdel = Module["_neil_send_ctrlaltdel"] = wasmExports["se"])();
 
-var _neil_update_autoexec_additional = Module["_neil_update_autoexec_additional"] = a0 => (_neil_update_autoexec_additional = Module["_neil_update_autoexec_additional"] = wasmExports["se"])(a0);
+var _neil_update_autoexec_additional = Module["_neil_update_autoexec_additional"] = a0 => (_neil_update_autoexec_additional = Module["_neil_update_autoexec_additional"] = wasmExports["te"])(a0);
 
-var _neil_show_toast = Module["_neil_show_toast"] = a0 => (_neil_show_toast = Module["_neil_show_toast"] = wasmExports["te"])(a0);
+var _neil_show_toast = Module["_neil_show_toast"] = a0 => (_neil_show_toast = Module["_neil_show_toast"] = wasmExports["ue"])(a0);
 
-var _neil_change_iso = Module["_neil_change_iso"] = a0 => (_neil_change_iso = Module["_neil_change_iso"] = wasmExports["ue"])(a0);
+var _neil_change_iso = Module["_neil_change_iso"] = a0 => (_neil_change_iso = Module["_neil_change_iso"] = wasmExports["ve"])(a0);
 
-var _neil_load_floppy = Module["_neil_load_floppy"] = a0 => (_neil_load_floppy = Module["_neil_load_floppy"] = wasmExports["ve"])(a0);
+var _neil_load_floppy = Module["_neil_load_floppy"] = a0 => (_neil_load_floppy = Module["_neil_load_floppy"] = wasmExports["we"])(a0);
 
-var _neil_change_floppy = Module["_neil_change_floppy"] = a0 => (_neil_change_floppy = Module["_neil_change_floppy"] = wasmExports["we"])(a0);
+var _neil_change_floppy = Module["_neil_change_floppy"] = a0 => (_neil_change_floppy = Module["_neil_change_floppy"] = wasmExports["xe"])(a0);
 
-var _neil_send_key = Module["_neil_send_key"] = a0 => (_neil_send_key = Module["_neil_send_key"] = wasmExports["xe"])(a0);
+var _neil_send_key = Module["_neil_send_key"] = a0 => (_neil_send_key = Module["_neil_send_key"] = wasmExports["ye"])(a0);
 
-var _neil_send_dos_commands = Module["_neil_send_dos_commands"] = a0 => (_neil_send_dos_commands = Module["_neil_send_dos_commands"] = wasmExports["ye"])(a0);
+var _neil_send_dos_commands = Module["_neil_send_dos_commands"] = a0 => (_neil_send_dos_commands = Module["_neil_send_dos_commands"] = wasmExports["ze"])(a0);
 
-var _neilGetSoundBufferResampledAddress = Module["_neilGetSoundBufferResampledAddress"] = () => (_neilGetSoundBufferResampledAddress = Module["_neilGetSoundBufferResampledAddress"] = wasmExports["ze"])();
+var _neil_get_mt32_lcd_message = Module["_neil_get_mt32_lcd_message"] = () => (_neil_get_mt32_lcd_message = Module["_neil_get_mt32_lcd_message"] = wasmExports["Ae"])();
 
-var _neilGetAudioWritePosition = Module["_neilGetAudioWritePosition"] = () => (_neilGetAudioWritePosition = Module["_neilGetAudioWritePosition"] = wasmExports["Ae"])();
+var _neilGetSoundBufferResampledAddress = Module["_neilGetSoundBufferResampledAddress"] = () => (_neilGetSoundBufferResampledAddress = Module["_neilGetSoundBufferResampledAddress"] = wasmExports["Be"])();
 
-var _neil_serialize = Module["_neil_serialize"] = () => (_neil_serialize = Module["_neil_serialize"] = wasmExports["Be"])();
+var _neilGetAudioWritePosition = Module["_neilGetAudioWritePosition"] = () => (_neilGetAudioWritePosition = Module["_neilGetAudioWritePosition"] = wasmExports["Ce"])();
 
-var _neil_unserialize = Module["_neil_unserialize"] = () => (_neil_unserialize = Module["_neil_unserialize"] = wasmExports["Ce"])();
+var _neil_serialize = Module["_neil_serialize"] = () => (_neil_serialize = Module["_neil_serialize"] = wasmExports["De"])();
 
-var _neil_send_mouse_movement = Module["_neil_send_mouse_movement"] = (a0, a1) => (_neil_send_mouse_movement = Module["_neil_send_mouse_movement"] = wasmExports["De"])(a0, a1);
+var _neil_unserialize = Module["_neil_unserialize"] = () => (_neil_unserialize = Module["_neil_unserialize"] = wasmExports["Ee"])();
 
-var _neil_send_dos_controls = Module["_neil_send_dos_controls"] = (a0, a1, a2, a3, a4) => (_neil_send_dos_controls = Module["_neil_send_dos_controls"] = wasmExports["Ee"])(a0, a1, a2, a3, a4);
+var _neil_send_mouse_movement = Module["_neil_send_mouse_movement"] = (a0, a1) => (_neil_send_mouse_movement = Module["_neil_send_mouse_movement"] = wasmExports["Fe"])(a0, a1);
 
-var ___trap = () => (___trap = wasmExports["Fe"])();
+var _neil_send_dos_controls = Module["_neil_send_dos_controls"] = (a0, a1, a2, a3, a4) => (_neil_send_dos_controls = Module["_neil_send_dos_controls"] = wasmExports["Ge"])(a0, a1, a2, a3, a4);
 
-var setTempRet0 = a0 => (setTempRet0 = wasmExports["Ge"])(a0);
+var ___trap = () => (___trap = wasmExports["He"])();
 
-var stackSave = () => (stackSave = wasmExports["He"])();
+var setTempRet0 = a0 => (setTempRet0 = wasmExports["Ie"])(a0);
 
-var stackRestore = a0 => (stackRestore = wasmExports["Ie"])(a0);
+var stackSave = () => (stackSave = wasmExports["Je"])();
 
-var stackAlloc = a0 => (stackAlloc = wasmExports["Je"])(a0);
+var stackRestore = a0 => (stackRestore = wasmExports["Ke"])(a0);
 
-var dynCall_viiiii = Module["dynCall_viiiii"] = (a0, a1, a2, a3, a4, a5) => (dynCall_viiiii = Module["dynCall_viiiii"] = wasmExports["Ke"])(a0, a1, a2, a3, a4, a5);
+var stackAlloc = a0 => (stackAlloc = wasmExports["Le"])(a0);
 
-var dynCall_vi = Module["dynCall_vi"] = (a0, a1) => (dynCall_vi = Module["dynCall_vi"] = wasmExports["Le"])(a0, a1);
+var dynCall_viiiii = Module["dynCall_viiiii"] = (a0, a1, a2, a3, a4, a5) => (dynCall_viiiii = Module["dynCall_viiiii"] = wasmExports["Me"])(a0, a1, a2, a3, a4, a5);
 
-var dynCall_i = Module["dynCall_i"] = a0 => (dynCall_i = Module["dynCall_i"] = wasmExports["Me"])(a0);
+var dynCall_vi = Module["dynCall_vi"] = (a0, a1) => (dynCall_vi = Module["dynCall_vi"] = wasmExports["Ne"])(a0, a1);
 
-var dynCall_ii = Module["dynCall_ii"] = (a0, a1) => (dynCall_ii = Module["dynCall_ii"] = wasmExports["Ne"])(a0, a1);
+var dynCall_i = Module["dynCall_i"] = a0 => (dynCall_i = Module["dynCall_i"] = wasmExports["Oe"])(a0);
 
-var dynCall_iii = Module["dynCall_iii"] = (a0, a1, a2) => (dynCall_iii = Module["dynCall_iii"] = wasmExports["Oe"])(a0, a1, a2);
+var dynCall_ii = Module["dynCall_ii"] = (a0, a1) => (dynCall_ii = Module["dynCall_ii"] = wasmExports["Pe"])(a0, a1);
 
-var dynCall_vii = Module["dynCall_vii"] = (a0, a1, a2) => (dynCall_vii = Module["dynCall_vii"] = wasmExports["Pe"])(a0, a1, a2);
+var dynCall_iii = Module["dynCall_iii"] = (a0, a1, a2) => (dynCall_iii = Module["dynCall_iii"] = wasmExports["Qe"])(a0, a1, a2);
 
-var dynCall_viii = Module["dynCall_viii"] = (a0, a1, a2, a3) => (dynCall_viii = Module["dynCall_viii"] = wasmExports["Qe"])(a0, a1, a2, a3);
+var dynCall_vii = Module["dynCall_vii"] = (a0, a1, a2) => (dynCall_vii = Module["dynCall_vii"] = wasmExports["Re"])(a0, a1, a2);
 
-var dynCall_iiii = Module["dynCall_iiii"] = (a0, a1, a2, a3) => (dynCall_iiii = Module["dynCall_iiii"] = wasmExports["Re"])(a0, a1, a2, a3);
+var dynCall_viii = Module["dynCall_viii"] = (a0, a1, a2, a3) => (dynCall_viii = Module["dynCall_viii"] = wasmExports["Se"])(a0, a1, a2, a3);
 
-var dynCall_iiiii = Module["dynCall_iiiii"] = (a0, a1, a2, a3, a4) => (dynCall_iiiii = Module["dynCall_iiiii"] = wasmExports["Se"])(a0, a1, a2, a3, a4);
+var dynCall_iiii = Module["dynCall_iiii"] = (a0, a1, a2, a3) => (dynCall_iiii = Module["dynCall_iiii"] = wasmExports["Te"])(a0, a1, a2, a3);
 
-var dynCall_iiiiiii = Module["dynCall_iiiiiii"] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_iiiiiii = Module["dynCall_iiiiiii"] = wasmExports["Te"])(a0, a1, a2, a3, a4, a5, a6);
+var dynCall_iiiii = Module["dynCall_iiiii"] = (a0, a1, a2, a3, a4) => (dynCall_iiiii = Module["dynCall_iiiii"] = wasmExports["Ue"])(a0, a1, a2, a3, a4);
 
-var dynCall_iiiiii = Module["dynCall_iiiiii"] = (a0, a1, a2, a3, a4, a5) => (dynCall_iiiiii = Module["dynCall_iiiiii"] = wasmExports["Ue"])(a0, a1, a2, a3, a4, a5);
+var dynCall_iiiiiii = Module["dynCall_iiiiiii"] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_iiiiiii = Module["dynCall_iiiiiii"] = wasmExports["Ve"])(a0, a1, a2, a3, a4, a5, a6);
 
-var dynCall_iiiji = Module["dynCall_iiiji"] = (a0, a1, a2, a3, a4, a5) => (dynCall_iiiji = Module["dynCall_iiiji"] = wasmExports["Ve"])(a0, a1, a2, a3, a4, a5);
+var dynCall_iiiiii = Module["dynCall_iiiiii"] = (a0, a1, a2, a3, a4, a5) => (dynCall_iiiiii = Module["dynCall_iiiiii"] = wasmExports["We"])(a0, a1, a2, a3, a4, a5);
 
-var dynCall_iij = Module["dynCall_iij"] = (a0, a1, a2, a3) => (dynCall_iij = Module["dynCall_iij"] = wasmExports["We"])(a0, a1, a2, a3);
+var dynCall_iiiji = Module["dynCall_iiiji"] = (a0, a1, a2, a3, a4, a5) => (dynCall_iiiji = Module["dynCall_iiiji"] = wasmExports["Xe"])(a0, a1, a2, a3, a4, a5);
 
-var dynCall_ji = Module["dynCall_ji"] = (a0, a1) => (dynCall_ji = Module["dynCall_ji"] = wasmExports["Xe"])(a0, a1);
+var dynCall_iij = Module["dynCall_iij"] = (a0, a1, a2, a3) => (dynCall_iij = Module["dynCall_iij"] = wasmExports["Ye"])(a0, a1, a2, a3);
 
-var dynCall_v = Module["dynCall_v"] = a0 => (dynCall_v = Module["dynCall_v"] = wasmExports["Ye"])(a0);
+var dynCall_ji = Module["dynCall_ji"] = (a0, a1) => (dynCall_ji = Module["dynCall_ji"] = wasmExports["Ze"])(a0, a1);
 
-var dynCall_viiii = Module["dynCall_viiii"] = (a0, a1, a2, a3, a4) => (dynCall_viiii = Module["dynCall_viiii"] = wasmExports["Ze"])(a0, a1, a2, a3, a4);
+var dynCall_v = Module["dynCall_v"] = a0 => (dynCall_v = Module["dynCall_v"] = wasmExports["_e"])(a0);
 
-var dynCall_ij = Module["dynCall_ij"] = (a0, a1, a2) => (dynCall_ij = Module["dynCall_ij"] = wasmExports["_e"])(a0, a1, a2);
+var dynCall_viiii = Module["dynCall_viiii"] = (a0, a1, a2, a3, a4) => (dynCall_viiii = Module["dynCall_viiii"] = wasmExports["$e"])(a0, a1, a2, a3, a4);
 
-var dynCall_jiij = Module["dynCall_jiij"] = (a0, a1, a2, a3, a4) => (dynCall_jiij = Module["dynCall_jiij"] = wasmExports["$e"])(a0, a1, a2, a3, a4);
+var dynCall_ij = Module["dynCall_ij"] = (a0, a1, a2) => (dynCall_ij = Module["dynCall_ij"] = wasmExports["af"])(a0, a1, a2);
 
-var dynCall_viiiiiii = Module["dynCall_viiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7) => (dynCall_viiiiiii = Module["dynCall_viiiiiii"] = wasmExports["af"])(a0, a1, a2, a3, a4, a5, a6, a7);
+var dynCall_jiij = Module["dynCall_jiij"] = (a0, a1, a2, a3, a4) => (dynCall_jiij = Module["dynCall_jiij"] = wasmExports["bf"])(a0, a1, a2, a3, a4);
 
-var dynCall_viiiiiiii = Module["dynCall_viiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8) => (dynCall_viiiiiiii = Module["dynCall_viiiiiiii"] = wasmExports["bf"])(a0, a1, a2, a3, a4, a5, a6, a7, a8);
+var dynCall_viiiiiii = Module["dynCall_viiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7) => (dynCall_viiiiiii = Module["dynCall_viiiiiii"] = wasmExports["cf"])(a0, a1, a2, a3, a4, a5, a6, a7);
 
-var dynCall_viiiiii = Module["dynCall_viiiiii"] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_viiiiii = Module["dynCall_viiiiii"] = wasmExports["cf"])(a0, a1, a2, a3, a4, a5, a6);
+var dynCall_viiiiiiii = Module["dynCall_viiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8) => (dynCall_viiiiiiii = Module["dynCall_viiiiiiii"] = wasmExports["df"])(a0, a1, a2, a3, a4, a5, a6, a7, a8);
 
-var dynCall_jii = Module["dynCall_jii"] = (a0, a1, a2) => (dynCall_jii = Module["dynCall_jii"] = wasmExports["df"])(a0, a1, a2);
+var dynCall_viiiiii = Module["dynCall_viiiiii"] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_viiiiii = Module["dynCall_viiiiii"] = wasmExports["ef"])(a0, a1, a2, a3, a4, a5, a6);
 
-var dynCall_fif = Module["dynCall_fif"] = (a0, a1, a2) => (dynCall_fif = Module["dynCall_fif"] = wasmExports["ef"])(a0, a1, a2);
+var dynCall_jii = Module["dynCall_jii"] = (a0, a1, a2) => (dynCall_jii = Module["dynCall_jii"] = wasmExports["ff"])(a0, a1, a2);
 
-var dynCall_vif = Module["dynCall_vif"] = (a0, a1, a2) => (dynCall_vif = Module["dynCall_vif"] = wasmExports["ff"])(a0, a1, a2);
+var dynCall_fif = Module["dynCall_fif"] = (a0, a1, a2) => (dynCall_fif = Module["dynCall_fif"] = wasmExports["gf"])(a0, a1, a2);
 
-var dynCall_vifi = Module["dynCall_vifi"] = (a0, a1, a2, a3) => (dynCall_vifi = Module["dynCall_vifi"] = wasmExports["gf"])(a0, a1, a2, a3);
+var dynCall_vif = Module["dynCall_vif"] = (a0, a1, a2) => (dynCall_vif = Module["dynCall_vif"] = wasmExports["hf"])(a0, a1, a2);
 
-var dynCall_iiiiiiiiii = Module["dynCall_iiiiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) => (dynCall_iiiiiiiiii = Module["dynCall_iiiiiiiiii"] = wasmExports["hf"])(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
+var dynCall_vifi = Module["dynCall_vifi"] = (a0, a1, a2, a3) => (dynCall_vifi = Module["dynCall_vifi"] = wasmExports["jf"])(a0, a1, a2, a3);
 
-var dynCall_jiji = Module["dynCall_jiji"] = (a0, a1, a2, a3, a4) => (dynCall_jiji = Module["dynCall_jiji"] = wasmExports["jf"])(a0, a1, a2, a3, a4);
+var dynCall_iiiiiiiiii = Module["dynCall_iiiiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) => (dynCall_iiiiiiiiii = Module["dynCall_iiiiiiiiii"] = wasmExports["kf"])(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
 
-var dynCall_vffff = Module["dynCall_vffff"] = (a0, a1, a2, a3, a4) => (dynCall_vffff = Module["dynCall_vffff"] = wasmExports["kf"])(a0, a1, a2, a3, a4);
+var dynCall_jiji = Module["dynCall_jiji"] = (a0, a1, a2, a3, a4) => (dynCall_jiji = Module["dynCall_jiji"] = wasmExports["lf"])(a0, a1, a2, a3, a4);
 
-var dynCall_vf = Module["dynCall_vf"] = (a0, a1) => (dynCall_vf = Module["dynCall_vf"] = wasmExports["lf"])(a0, a1);
+var dynCall_vffff = Module["dynCall_vffff"] = (a0, a1, a2, a3, a4) => (dynCall_vffff = Module["dynCall_vffff"] = wasmExports["mf"])(a0, a1, a2, a3, a4);
 
-var dynCall_viiiiiiiii = Module["dynCall_viiiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) => (dynCall_viiiiiiiii = Module["dynCall_viiiiiiiii"] = wasmExports["mf"])(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
+var dynCall_vf = Module["dynCall_vf"] = (a0, a1) => (dynCall_vf = Module["dynCall_vf"] = wasmExports["nf"])(a0, a1);
 
-var dynCall_vff = Module["dynCall_vff"] = (a0, a1, a2) => (dynCall_vff = Module["dynCall_vff"] = wasmExports["nf"])(a0, a1, a2);
+var dynCall_viiiiiiiii = Module["dynCall_viiiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) => (dynCall_viiiiiiiii = Module["dynCall_viiiiiiiii"] = wasmExports["of"])(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
 
-var dynCall_vfi = Module["dynCall_vfi"] = (a0, a1, a2) => (dynCall_vfi = Module["dynCall_vfi"] = wasmExports["of"])(a0, a1, a2);
+var dynCall_vff = Module["dynCall_vff"] = (a0, a1, a2) => (dynCall_vff = Module["dynCall_vff"] = wasmExports["pf"])(a0, a1, a2);
 
-var dynCall_viif = Module["dynCall_viif"] = (a0, a1, a2, a3) => (dynCall_viif = Module["dynCall_viif"] = wasmExports["pf"])(a0, a1, a2, a3);
+var dynCall_vfi = Module["dynCall_vfi"] = (a0, a1, a2) => (dynCall_vfi = Module["dynCall_vfi"] = wasmExports["qf"])(a0, a1, a2);
 
-var dynCall_viff = Module["dynCall_viff"] = (a0, a1, a2, a3) => (dynCall_viff = Module["dynCall_viff"] = wasmExports["qf"])(a0, a1, a2, a3);
+var dynCall_viif = Module["dynCall_viif"] = (a0, a1, a2, a3) => (dynCall_viif = Module["dynCall_viif"] = wasmExports["rf"])(a0, a1, a2, a3);
 
-var dynCall_vifff = Module["dynCall_vifff"] = (a0, a1, a2, a3, a4) => (dynCall_vifff = Module["dynCall_vifff"] = wasmExports["rf"])(a0, a1, a2, a3, a4);
+var dynCall_viff = Module["dynCall_viff"] = (a0, a1, a2, a3) => (dynCall_viff = Module["dynCall_viff"] = wasmExports["sf"])(a0, a1, a2, a3);
 
-var dynCall_viffff = Module["dynCall_viffff"] = (a0, a1, a2, a3, a4, a5) => (dynCall_viffff = Module["dynCall_viffff"] = wasmExports["sf"])(a0, a1, a2, a3, a4, a5);
+var dynCall_vifff = Module["dynCall_vifff"] = (a0, a1, a2, a3, a4) => (dynCall_vifff = Module["dynCall_vifff"] = wasmExports["tf"])(a0, a1, a2, a3, a4);
 
-var dynCall_iidiiii = Module["dynCall_iidiiii"] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_iidiiii = Module["dynCall_iidiiii"] = wasmExports["tf"])(a0, a1, a2, a3, a4, a5, a6);
+var dynCall_viffff = Module["dynCall_viffff"] = (a0, a1, a2, a3, a4, a5) => (dynCall_viffff = Module["dynCall_viffff"] = wasmExports["uf"])(a0, a1, a2, a3, a4, a5);
 
-var dynCall_viijii = Module["dynCall_viijii"] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_viijii = Module["dynCall_viijii"] = wasmExports["uf"])(a0, a1, a2, a3, a4, a5, a6);
+var dynCall_iidiiii = Module["dynCall_iidiiii"] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_iidiiii = Module["dynCall_iidiiii"] = wasmExports["vf"])(a0, a1, a2, a3, a4, a5, a6);
 
-var dynCall_iiiiiiiii = Module["dynCall_iiiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8) => (dynCall_iiiiiiiii = Module["dynCall_iiiiiiiii"] = wasmExports["vf"])(a0, a1, a2, a3, a4, a5, a6, a7, a8);
+var dynCall_viijii = Module["dynCall_viijii"] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_viijii = Module["dynCall_viijii"] = wasmExports["wf"])(a0, a1, a2, a3, a4, a5, a6);
 
-var dynCall_iiiiij = Module["dynCall_iiiiij"] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_iiiiij = Module["dynCall_iiiiij"] = wasmExports["wf"])(a0, a1, a2, a3, a4, a5, a6);
+var dynCall_iiiiiiiii = Module["dynCall_iiiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8) => (dynCall_iiiiiiiii = Module["dynCall_iiiiiiiii"] = wasmExports["xf"])(a0, a1, a2, a3, a4, a5, a6, a7, a8);
 
-var dynCall_iiiiid = Module["dynCall_iiiiid"] = (a0, a1, a2, a3, a4, a5) => (dynCall_iiiiid = Module["dynCall_iiiiid"] = wasmExports["xf"])(a0, a1, a2, a3, a4, a5);
+var dynCall_iiiiij = Module["dynCall_iiiiij"] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_iiiiij = Module["dynCall_iiiiij"] = wasmExports["yf"])(a0, a1, a2, a3, a4, a5, a6);
 
-var dynCall_iiiiijj = Module["dynCall_iiiiijj"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8) => (dynCall_iiiiijj = Module["dynCall_iiiiijj"] = wasmExports["yf"])(a0, a1, a2, a3, a4, a5, a6, a7, a8);
+var dynCall_iiiiid = Module["dynCall_iiiiid"] = (a0, a1, a2, a3, a4, a5) => (dynCall_iiiiid = Module["dynCall_iiiiid"] = wasmExports["zf"])(a0, a1, a2, a3, a4, a5);
 
-var dynCall_iiiiiiii = Module["dynCall_iiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7) => (dynCall_iiiiiiii = Module["dynCall_iiiiiiii"] = wasmExports["zf"])(a0, a1, a2, a3, a4, a5, a6, a7);
+var dynCall_iiiiijj = Module["dynCall_iiiiijj"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8) => (dynCall_iiiiijj = Module["dynCall_iiiiijj"] = wasmExports["Af"])(a0, a1, a2, a3, a4, a5, a6, a7, a8);
 
-var dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) => (dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = wasmExports["Af"])(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
+var dynCall_iiiiiiii = Module["dynCall_iiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7) => (dynCall_iiiiiiii = Module["dynCall_iiiiiiii"] = wasmExports["Bf"])(a0, a1, a2, a3, a4, a5, a6, a7);
 
-var _asyncify_start_unwind = a0 => (_asyncify_start_unwind = wasmExports["Bf"])(a0);
+var dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) => (dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = wasmExports["Cf"])(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
 
-var _asyncify_stop_unwind = () => (_asyncify_stop_unwind = wasmExports["Cf"])();
+var _asyncify_start_unwind = a0 => (_asyncify_start_unwind = wasmExports["Df"])(a0);
 
-var _asyncify_start_rewind = a0 => (_asyncify_start_rewind = wasmExports["Df"])(a0);
+var _asyncify_stop_unwind = () => (_asyncify_stop_unwind = wasmExports["Ef"])();
 
-var _asyncify_stop_rewind = () => (_asyncify_stop_rewind = wasmExports["Ef"])();
+var _asyncify_start_rewind = a0 => (_asyncify_start_rewind = wasmExports["Ff"])(a0);
 
-var ___start_em_js = Module["___start_em_js"] = 5965240;
+var _asyncify_stop_rewind = () => (_asyncify_stop_rewind = wasmExports["Gf"])();
 
-var ___stop_em_js = Module["___stop_em_js"] = 5968827;
+var ___start_em_js = Module["___start_em_js"] = 5969752;
+
+var ___stop_em_js = Module["___stop_em_js"] = 5973339;
 
 Module["addRunDependency"] = addRunDependency;
 

@@ -12,6 +12,9 @@
 
 std::string mt32info = "";
 static const Bitu MILLIS_PER_SECOND = 1000;
+extern "C" {
+    char neil_mt32_lcd_message[128] = {0};
+}
 
 class RingBuffer {
 private:
@@ -133,6 +136,10 @@ private:
 
             static void showLCDMessage(void *, const char *message) {
                 LOG_MSG("MT32: LCD-Message: %s", message);
+                if (message) {
+                    strncpy(neil_mt32_lcd_message, message, sizeof(neil_mt32_lcd_message) - 1);
+                    neil_mt32_lcd_message[sizeof(neil_mt32_lcd_message) - 1] = '\0';
+                }
             }
         };
 
@@ -349,6 +356,7 @@ public:
 
 	void Close(void) override {
         if (!open) return;
+        neil_mt32_lcd_message[0] = '\0';
         chan->Enable(false);
         if (renderInThread) {
             stopProcessing = true;

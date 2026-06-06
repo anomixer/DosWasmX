@@ -47,6 +47,9 @@
         .githubDiv a {
             color: white;
         }
+        #header img {
+            filter: invert(1);
+        }
         .divTouchSurface {
             background-color: black;
         }
@@ -106,10 +109,16 @@
     }
 </style>
 
-<body>
+<body class="darkMode">
     <div id="maindiv" class="container text-center">
-        <h1 id="header">
+        <h1 id="header" style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
             DOS Wasm X
+            <a href="https://github.com/anomixer/DosWasmX" target="_blank" title="View Source on GitHub">
+                <img src="github_logo.png" style="height: 28px; vertical-align: middle;">
+            </a>
+            <span id="mt32-lcd" style="font-size: 14px; font-weight: normal; color: #00bcd4; margin-left: 20px; display: none;">
+                MT-32 LCD Messages: <span id="mt32-lcd-text" style="font-family: monospace; background: #222; padding: 2px 6px; border-radius: 4px; border: 1px solid #333; color: #00ffcc;"></span>
+            </span>
         </h1>
 
         <div id="topPanel" style="display: none;">
@@ -197,6 +206,7 @@
                     <div rv-hide="data.moduleInitializing" style="width: 70%; margin-left: auto; margin-right: auto;">
                         <div rv-hide="data.loggedIn | ev '==true'">
                             <div class="alert alert-info mt-4" role="alert" rv-if="data.dblistDisks | ev_string '.length == 0'">
+                                <b>Roland MT-32 MIDI full supported! Open browser with single tab for best performance.</b><br>
                                 Start by dragging any DOS based application/game files onto the page. <br>
                                 If you want to run Windows simply drag a Windows 95/98 ISO and proceed with the installation.
                             </div>
@@ -309,18 +319,18 @@
     </div>
 
     <div id="divInstructions" class="container text-center" style="display: none;">
-        <div class="alert alert-secondary mt-4" role="alert" rv-if="data.initialInstallation">
-            Remember to always click the Save Drive button before exiting the page. That will commit your hard disk changes to the browser.<br>
-            If you installed Windows then remember to shut down the OS before exiting the page.
+        <div class="alert alert-secondary mt-4" role="alert">
+            <b>Roland MT-32 MIDI full supported! Open browser with single tab for best performance.</b>
+            <span rv-if="data.initialInstallation">
+                <br>
+                Remember to always click the Save Drive button before exiting the page. That will commit your hard disk changes to the browser.<br>
+                If you installed Windows then remember to shut down the OS before exiting the page.
+            </span>
         </div>
     </div>
     
-    <h6 id="githubDiv" class="githubDiv card-title mt-4 text-center" style="display: none;">
-        <a href="https://github.com/nbarkhina/doswasmx" target="_blank">
-            View source on GitHub
-            <img src="github_logo.png" style="height: 25px; padding-bottom: 5px; padding-left: 10px;">
-        </a>
-    </h6>
+    <!-- githubDiv left empty to remove bottom "View source on GitHub" but keep DOM element for jQuery compatibility -->
+    <div id="githubDiv" style="display: none;"></div>
 
     <!--  Settings Modal -->
     <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel"

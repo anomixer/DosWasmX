@@ -333,12 +333,16 @@ extern bool DOSBox_Paused(), isDBCSCP(), InitCodePage();
 
 //For trying other delays
 
+bool asyncify_suspend_disabled = false;
+
 static Uint32 SDL_ticks_last = 0,SDL_ticks_next = 0;
 extern bool togglePauseRequested;
 
 static Bitu Normal_Loop(void) {
 #ifdef C_EMSCRIPTEN
-    asyncify_sleep(0);
+    if (!asyncify_suspend_disabled) {
+        asyncify_sleep(0);
+    }
 #endif
     bool saved_allow = dosbox_allow_nonrecursive_page_fault;
     Bits ret;
@@ -505,14 +509,31 @@ void increaseticks() { //Make it return ticksRemain and set it in the function a
         return;
     }
     uint32_t ticksNew = GetTicks();
+
+#ifdef C_EMSCRIPTEN
+    extern bool asyncify_suspend_disabled;
+    static uint32_t lastSleepTime = 0;
+    if (lastSleepTime == 0) {
+        lastSleepTime = ticksNew;
+    }
+    if (!asyncify_suspend_disabled && ticksNew - lastSleepTime >= 10) {
+        asyncify_sleep(1, true);
+        lastSleepTime = GetTicks();
+        ticksNew = lastSleepTime;
+    }
+#endif
+
     ticksScheduled += ticksAdded;
 
     if (ticksNew <= ticksLast) { //lower should not be possible, only equal.
         ticksAdded = 0;
 #ifdef C_EMSCRIPTEN
-
-		asyncify_sleep(1, true);
-        int32_t timeslept = std::max((int32_t)(GetTicks() - ticksNew), int32_t(1));
+        if (!asyncify_suspend_disabled) {
+            asyncify_sleep(1, true);
+        }
+        uint32_t ticksAfterSleep = GetTicks();
+        lastSleepTime = ticksAfterSleep;
+        int32_t timeslept = std::max((int32_t)(ticksAfterSleep - ticksNew), int32_t(1));
 #else
         if (!CPU_CycleAutoAdjust || CPU_SkipCycleAutoAdjust || sleep1count < 3) {
             SDL_Delay(1);

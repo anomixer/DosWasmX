@@ -915,7 +915,8 @@ class InputController {
 
 window["myApp"].setupInputController();
 
+var rando = Math.floor(Math.random() * Math.floor(100000));
 var script = document.createElement('script');
 script.type = 'text/javascript';
-script.src = 'main.js';
+script.src = 'main.js?v=' + rando;
 document.head.appendChild(script);

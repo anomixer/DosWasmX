@@ -3,7 +3,7 @@ This is a browser based DOS emulator designed around ease of use and stability. 
 
 Supports the following features -
 - Fully web based application - using web assembly
-- Roland MT-32 MIDI Audio Emulation (using Munt/mt32emu)
+- Roland MT-32 MIDI Audio Emulation (using Munt/mt32emu) with real-time LCD message display
 - Save hard drive to the browser (512mb, 1 gig, or 2 gig options)
 - Automatic support for a variety of file formats (Iso, Zip, Bin, Cue, Img, 7z)
 - Customize RAM (32mb, 64mb, 128mb)
@@ -33,7 +33,7 @@ You can try it here: https://www.neilb.net/doswasmx/
 
 
 # Hosting
-You can host the app on your own web server. Copy everything in the `dist\` folder to your web server.
+You can host the app on your own web server. Copy everything in the `dist\` folder to your web server. Alternatively, you can use the pre-configured **GitHub Actions workflow** to automatically deploy the `dist/` folder to GitHub Pages when pushing to the `master` branch (ensure your Repository's Pages source is configured to "GitHub Actions" in Settings).
 
 Also you can optionally configure a Default Hard Drive to load when users navigate to your application. After Saving/Configuring a Hard Drive locally you can export it from the advanced menu.
 
@@ -144,7 +144,10 @@ DOS Wasm X supports Roland MT-32 emulation out of the box using Munt (mt32emu).
 
 To enable MT-32 audio in games:
 1. Make sure your games are configured to use **Roland MT-32** or **LAPC-I** for music (usually configured via the game's `SETUP.EXE` or `INSTALL.EXE`).
-2. The emulator will automatically attempt to fetch `MT32_CONTROL.ROM` and `MT32_PCM.ROM` from your web server's root. Make sure to place these two ROM files in your `dist/` directory on your server.
+2. The emulator will automatically attempt to fetch `MT32_CONTROL.ROM` and `MT32_PCM.ROM` from your web server's root. Make sure to place these two ROM files in your `dist/` directory on your server. (Note: If you are deploying via the provided GitHub Actions workflow, these ROM files will be downloaded automatically during the deployment process, so you do not need to add them to your git repository.)
+3. **Local Development**: When running locally with `run.bat`, the script will automatically detect if the ROM files are missing and download them from [archive.org](https://archive.org/download/mame-versioned-roland-mt-32-and-cm-32l-rom-files/MT-32_v1.07_legacy_ROM_files.zip).
+4. **MT-32 LCD Display**: When a game sends MT-32 LCD messages (e.g., song titles or patch names), they are displayed in real-time next to the page header as `MT-32 LCD Messages: xxxxxxxxx`.
+5. **Performance Recommendation**: For the best audio quality and emulation speed, run the emulator in a **dedicated, independent browser tab**. Avoid running multiple active tabs with heavy tasks or playing audio simultaneously, to prevent resource competition that can cause audio stuttering.
 
 # Common DOS Commands
 
@@ -170,5 +173,9 @@ The Following codebases were used in some part in creating this app
 - Emscripten 
   - https://github.com/emscripten-core/emscripten
 
+# AI Agents Development Log
+The integration and optimization of Roland MT-32 emulation were fully completed with the assistance of AI Agents. A detailed log of the development process — including compilation error fixes, performance optimizations, the MT-32 LCD display feature, and critical bug fixes such as the `cwrap` function signature mismatch — can be found in [AGENTS.md](AGENTS.md).
+
 # Disclaimer
 This app was made for fun and is not affiliated or associated with Microsoft.
+

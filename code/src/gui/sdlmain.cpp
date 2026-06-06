@@ -10776,4 +10776,10 @@ extern "C" {
         sprintf(send_command_neil, commands);
         requestSendCommand = true;
     }
+
+    extern char neil_mt32_lcd_message[128];
+    EMSCRIPTEN_KEEPALIVE const char* neil_get_mt32_lcd_message()
+    {
+        return neil_mt32_lcd_message;
+    }
 }

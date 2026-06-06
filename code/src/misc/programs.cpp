@@ -145,6 +145,8 @@ void PROGRAMS_MakeFile(char const * const name,PROGRAMS_Main * main,const char *
 	internal_program = false;
 }
 
+extern bool asyncify_suspend_disabled;
+
 static Bitu PROGRAMS_Handler(void) {
 	/* This sets up everything for a program start up call */
 	Bitu size=sizeof(uint8_t);
@@ -161,15 +163,20 @@ static Bitu PROGRAMS_Handler(void) {
 	PROGRAMS_Main * handler = internal_progs[index]->main;
 	(*handler)(&new_program);
 
+	bool saved_disabled = asyncify_suspend_disabled;
+	asyncify_suspend_disabled = true;
+
 	try { /* "BOOT" can throw an exception (int(2)) */
 		new_program->Run();
 		delete new_program;
 	}
 	catch (...) { /* well if it happened, free the program anyway to avert memory leaks */
 		delete new_program;
+		asyncify_suspend_disabled = saved_disabled;
 		throw; /* pass it on */
 	}
 
+	asyncify_suspend_disabled = saved_disabled;
 	return CBRET_NONE;
 }
 

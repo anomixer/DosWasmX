@@ -284,7 +284,6 @@ MYFLAGS := \
 	-Werror=return-type \
 	-fsigned-char \
 	-O3 \
-	-Oz \
 	-fwasm-exceptions \
     -s USE_SDL=2 \
     -s ASYNCIFY=1 \
@@ -307,7 +306,6 @@ MYFLAGSC := \
 	-Werror=return-type \
 	-fsigned-char \
 	-O3 \
-    -Oz \
 	-fwasm-exceptions \
     -s ASYNCIFY=1 \
     -s USE_SDL=2
@@ -324,7 +322,6 @@ main.js: $(FILES)
 	-fsigned-char \
 	-O3 \
 	-DNDEBUG \
-    -Oz \
 	-Wl,-u,htons \
 	-Wl,-u,ntohs \
 	-sTOTAL_STACK=1MB \
@@ -363,6 +360,7 @@ main.js: $(FILES)
     '_neilGetAudioWritePosition', \
     '_neil_serialize', \
     '_neil_unserialize', \
+    '_neil_get_mt32_lcd_message', \
 	'_neilNormalMode', '_neilSpeedUp', '_neilSlowDown', '_neil_update_cpu']" \
 	-sERROR_ON_UNDEFINED_SYMBOLS=1 \
 	--profiling \
