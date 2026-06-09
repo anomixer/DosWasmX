@@ -1,4 +1,9 @@
 # DOS Wasm X
+
+> 🏆 **World's first** browser-based DOS emulator with **native-speed, lag-free [Roland MT-32 MIDI emulation](#roland-mt-32-support)** — no plugins, no compromise.
+
+![screenshot](screenshots/screenshot-mt32lcd-gameplay.png)
+
 This is a browser based DOS emulator designed around ease of use and stability. It is based on the newer DosBox-X codebase and thus supports both Windows 95 and Windows 98 installations. However if you just want to use DOS applications and games you can stay in DOS mode. To begin using it simply drag and drop any application or game files onto the emulator. You can then save your hard disk with the click of a button or just exit if you want to discard your changes. I went with a simple and clean interface to try and make it approachable and non-intimidating. The hard disk saves directly in your browser so you can come back later and continue where you left off. It's like your own personal virtual machine on the web!
 
 Supports the following features -
@@ -29,8 +34,9 @@ Supports the following features -
 - Pause/Unpause
 - Import existing IMG hard disk if you already have one
 
-You can try it here: https://www.neilb.net/doswasmx/
+You can try it here: https://www.neilb.net/doswasmx/   (PS: No MT-32 supported!)
 
+Try my repo here: https://anomixer.github.io/DosWasmX/ (PS: Full MT-32 supported!)
 
 # Hosting
 You can host the app on your own web server. Copy everything in the `dist\` folder to your web server. Alternatively, you can use the pre-configured **GitHub Actions workflow** to automatically deploy the `dist/` folder to GitHub Pages when pushing to the `master` branch (ensure your Repository's Pages source is configured to "GitHub Actions" in Settings).
@@ -52,7 +58,7 @@ var DOSWASMSETTINGS = {
 ```
 
 # Startup Script
-You can automate a startup script by creating a "DOSWASMX.BAT" file. It needs to live in the root C:\ drive, not in any subfolder. At the root type "EDIT DOSWASMX.BAT" to create the file and put each command on a seperate line. Then save your file and the hard drive. Example -
+You can automate a startup script by creating a "DOSWASMX.BAT" file. It needs to live in the root C:\\ drive, not in any subfolder. At the root type "EDIT DOSWASMX.BAT" to create the file and put each command on a seperate line. Then save your file and the hard drive. Example -
 
 ![doswasmx.bat](docs/doswasmxbat.png)
 
@@ -178,4 +184,3 @@ The integration and optimization of Roland MT-32 emulation were fully completed 
 
 # Disclaimer
 This app was made for fun and is not affiliated or associated with Microsoft.
-
